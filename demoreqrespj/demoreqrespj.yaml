@@ -9,7 +9,7 @@ metadata:
   name: demoreqrespj-deploy
   namespace: demoreqrespj
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels: 
       app: demoreqrespj
