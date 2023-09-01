@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demoreqrespj
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demoreqrespj-deploy
+  namespace: demoreqrespj
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: demoreqrespj
+  template:
+    metadata:
+      labels:
+        app: demoreqrespj
+    spec:
+      containers:
+      - name: demoreqrespj
+        image: mkubik/demoreqrespj
+        ports:
+        - name: web
+          containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demoreqrespj-svc
+  namespace: demoreqrespj
+  labels:
+    app: demoreqrespj
+spec:
+  type: ClusterIP
+  ports:
+  - name:  http
+    port:  8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: demoreqrespj
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demoreqrespj-ingress
+  namespace: demoreqrespj
+spec:
+  rules:
+  - host: "demoreqrespj.kube-demo-1.kubik.home"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app-test-1-svc 
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - demoreqrespj.kube-demo-1.kubik.home
+    secretName: ademoreqrespj-tls-secret              
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: demoreqrespj-cert
+  namespace: demoreqrespj
+spec:
+  secretName: demoreqrespj-tls-secret
+  issuerRef:
+    name: ssl-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - demoreqrespj.kube-demo-1.kubik.home
