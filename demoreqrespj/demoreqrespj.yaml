@@ -62,7 +62,7 @@ spec:
   tls:
   - hosts:
     - demoreqrespj.kube-demo-1.kubik.home
-    secretName: ademoreqrespj-tls-secret              
+    secretName: demoreqrespj-tls-secret              
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
