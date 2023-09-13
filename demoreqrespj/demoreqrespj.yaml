@@ -73,6 +73,6 @@ spec:
   secretName: demoreqrespj-tls-secret
   issuerRef:
     name: ssl-issuer
-    kind: ClusterIssuer
+    kind: Issuer
   dnsNames:
     - demoreqrespj.kube-demo-1.kubik.home
