@@ -32,7 +32,7 @@ spec:
         image: mkubik/demoreqrespj:0.1.0
         ports:
         - name: web
-          containerPort: 8080
+          containerPort: 8080,9090
 ---
 apiVersion: v1
 kind: Service
