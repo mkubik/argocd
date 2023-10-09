@@ -13,7 +13,7 @@ spec:
     matchLabels:
       app: redis
   serviceName: redis
-  replicas: 3
+  replicas: 2
   template:
     metadata:
       labels:
