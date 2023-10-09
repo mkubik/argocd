@@ -50,6 +50,7 @@ metadata:
   name: redis-pv
   namespace: redis
 spec:
+  storageClassName: manual
   capacity:
     storage: 1Gi
   accessModes:
@@ -63,6 +64,7 @@ metadata:
   name: redis-pvc
   namespace: redis
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
