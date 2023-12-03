@@ -6,11 +6,17 @@ metadata:
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: ssl-issuer
-  namespace: demoreqrespj
+  name: letsencrypt-cluster-issuer
 spec:
-  ca:
-    secretName: demoreqrespj-tls-secret
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: your-email@email.com
+    privateKeySecretRef:
+      name: letsencrypt-cluster-issuer-key
+    solvers:
+    - http01:
+       ingress:
+         class: nginx
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
@@ -97,7 +103,7 @@ spec:
   tls:
   - hosts:
     - demoreqrespj.kube-demo-1.kubik.home
-    secretName: demoreqrespj-tls-secret              
+    secretName: selfsigned-cert-tls              
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -110,16 +116,3 @@ spec:
   secretName: selfsigned-cert-tls
   issuerRef:
     name: selfsigned
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: demoreqrespj-cert
-  namespace: demoreqrespj
-spec:
-  secretName: demoreqrespj-tls-secret
-  issuerRef:
-    name: ssl-issuer
-    kind: ClusterIssuer
-  dnsNames:
-    - demoreqrespj.kube-demo-1.kubik.home
