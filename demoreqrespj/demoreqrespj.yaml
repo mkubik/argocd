@@ -7,10 +7,9 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: ssl-issuer
-  namespace: demoreqrespj
 spec:
   ca:
-    secretName: demoreqrespj-tls-secret
+    secretName: ca-secret
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -76,7 +75,7 @@ metadata:
   namespace: demoreqrespj
 spec:
   rules:
-  - host: "demoreqrespj.kube-demo-1.kubik.home"
+  - host: "demoreqrespj.kubik-hq.home"
     http:
       paths:
       - path: /
@@ -88,8 +87,8 @@ spec:
               number: 80
   tls:
   - hosts:
-    - demoreqrespj.kube-demo-1.kubik.home
-    secretName: demoreqrespj-tls-secret              
+    - demoreqrespj.kubik-hq.home
+    secretName: ca-secret              
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -97,9 +96,9 @@ metadata:
   name: demoreqrespj-cert
   namespace: demoreqrespj
 spec:
-  secretName: demoreqrespj-tls-secret
+  secretName: ca-secret
   issuerRef:
     name: ssl-issuer
     kind: ClusterIssuer
   dnsNames:
-    - demoreqrespj.kube-demo-1.kubik.home
+    - demoreqrespj.kubik-hq.home
