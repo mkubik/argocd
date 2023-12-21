@@ -28,11 +28,21 @@ spec:
     spec:
       containers:
       - name: demoreqrespj
-        image: mkubik/demoreqrespj:0.1.1
+        image: mkubik/demoreqrespj:0.1.2
         ports:
         - name: web
           containerPort: 8080
           containerPort: 9090
+        livenessProbe:
+          httpGet:
+            path: /health/liveness
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health/readiness
+          initialDelaySeconds: 5
+          periodSeconds: 15
 ---
 apiVersion: v1
 kind: Service
