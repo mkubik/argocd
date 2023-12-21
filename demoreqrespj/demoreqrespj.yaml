@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: demoreqrespj
-        image: mkubik/demoreqrespj:0.1.3
+        image: mkubik/demoreqrespj:0.1.4
         ports:
         - name: web
           containerPort: 8080
